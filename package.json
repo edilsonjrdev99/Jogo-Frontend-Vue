@@ -1,0 +1,41 @@
+{
+  "name": "front-jogo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "format": "prettier --write \"src/**/*.{ts,tsx,vue,js,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,vue,js,json}\"",
+    "lint": "eslint src --ext .ts,.tsx,.vue,.js",
+    "lint:fix": "eslint src --ext .ts,.tsx,.vue,.js --fix",
+    "type-check": "vue-tsc --noEmit",
+    "pre-push": "npm run format:check && npm run lint && npm run type-check && npm run build",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "vue": "^3.5.24",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.17",
+    "@types/node": "^24.10.1",
+    "@typescript-eslint/eslint-plugin": "^8.49.0",
+    "@typescript-eslint/parser": "^8.49.0",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vue/tsconfig": "^0.8.1",
+    "autoprefixer": "^10.4.22",
+    "eslint": "^9.39.1",
+    "eslint-plugin-vue": "^10.6.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "postcss": "^8.5.6",
+    "prettier": "^3.7.4",
+    "tailwindcss": "^4.1.17",
+    "typescript": "~5.9.3",
+    "vite": "^7.2.4",
+    "vue-tsc": "^3.1.4"
+  }
+}
