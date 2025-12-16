@@ -3,9 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 // TYPE
 import type { RouteRecordRaw } from 'vue-router';
 
-// COMPOSABLE
-import useAuth from '@/composables/action/auth/useAuth';
-import useLoader from '@/composables/useLoader';
+// STORE
+import { useAuthStore } from '@/stores/auth/authStore';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -38,34 +37,35 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach(async (to, _from, next) => {
-  const { showLoader, hideLoader } = useLoader();
+router.beforeEach((to, _from, next) => {
+  const authStore = useAuthStore();
 
-  if(to.path !== '/') {
-    // Mostra o loader enquanto verifica a autenticação
-    showLoader('Verificando autenticação...');
+  // Aguarda a verificação inicial se ainda estiver checando
+  if (authStore.isChecking) {
+    const unwatch = authStore.$subscribe(() => {
+      if (!authStore.isChecking) {
+        unwatch();
+        processNavigation();
+      }
+    });
+  } else {
+    processNavigation();
+  }
 
-    const { checkAuth } = useAuth();
-
-    // Verifica se o usuário está autenticado
-    const isAuthenticated = await checkAuth();
-
-    // Esconde o loader após verificação
-    hideLoader();
-
+  function processNavigation() {
     // Se a rota requer autenticação e o usuário não está autenticado
-    if (to.meta.requiresAuth && !isAuthenticated) {
+    if (to.meta.requiresAuth && !authStore.isAuthenticated) {
       return next('/login');
     }
 
     // Se a rota só pode ser acessada quando não estiver autenticado e o usuário está autenticado
-    if (to.meta.requiresUnauthenticated && isAuthenticated) {
+    if (to.meta.requiresUnauthenticated && authStore.isAuthenticated) {
       return next('/game');
     }
-  }
 
-  // Permite a navegação
-  next();
+    // Permite a navegação
+    next();
+  }
 });
 
 export default router

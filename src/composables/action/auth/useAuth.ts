@@ -7,14 +7,18 @@ import { useToast } from 'vue-toastification';
 // COMPOSABLE
 import useAuthApi from '@/composables/api/auth/useAuthApi';
 
+// STORE
+import { useAuthStore } from '@/stores/auth/authStore';
+
 export default function useAuth() {
   /**
    * Função de request para o backend
    */
   const { loginRequest, logoutRequest, meRequest } = useAuthApi();
-  
-  const toast  = useToast();
-  const router = useRouter();
+
+  const toast     = useToast();
+  const router    = useRouter();
+  const authStore = useAuthStore();
 
   const email     = ref('');
   const password  = ref('');
@@ -30,8 +34,10 @@ export default function useAuth() {
 
     loginRequest(
       payload,
-      (response) => {
+      async (response) => {
         toast.success(response.data.message || 'Login realizado com sucesso.');
+        // Atualiza o store com os dados do usuário
+        await authStore.checkAuth();
         isLoading.value = false;
         resetLoginForm();
         router.push('/game');
@@ -47,12 +53,18 @@ export default function useAuth() {
    * Responsável por fazer o logout do user
    */
   const logout = async () => {
+    isLoading.value = true;
+
     logoutRequest(
       (response) => {
+        // Limpa o store
+        isLoading.value = false;
+        authStore.clearAuth();
         router.push('/login');
         toast.success(response.data.message || 'Logout realizado com sucesso.');
       }, // Success
       () => {
+        isLoading.value = false;
         toast.error('Erro ao tentar fazer logout.');
       } // Error
     );
