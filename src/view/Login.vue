@@ -6,17 +6,10 @@
 
   // COMPOSABLE
   import { useAuth } from '@/composables/action/useAuth';
-  import { useHealthApi } from '@/composables/api/useHealthApi';
 
   const { email, password, isLoading, login } = useAuth();
-  const { healthTest } = useHealthApi();
 
   const handleSubmit = async () => {
-    healthTest(
-      (response) => { console.log(response) },
-      (error) => { console.log(error) }
-    );
-
     await login();
   }
 </script>

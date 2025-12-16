@@ -1,21 +1,44 @@
 import { ref } from 'vue';
 
+// COMPOSABLE
+import useAuthApi from '@/composables/api/auth/useAuthApi';
+
 export const useAuth = () => {
+  /**
+   * Função de request para o backend
+   */
+  const { loginRequest } = useAuthApi();
+
   const email = ref('');
   const password = ref('');
   const isLoading = ref(false);
 
+  /**
+   * Responsável por fazer o login do usuário
+   */
   const login = async () => {
     isLoading.value = true;
+    
+    const payload = { email: email.value, password: password.value };
 
-    setTimeout(() => {
-      console.log('Login realizado com sucesso!');
-      isLoading.value = false;
-      resetForm();
-    }, 3000);
+    loginRequest(
+      payload,
+      (response) => {
+        console.log(response.data.message);
+        isLoading.value = false;
+        resetLoginForm();
+      }, // Success
+      (error) => {
+        console.log(error);
+        isLoading.value = false;
+      } // Error
+    );
   }
 
-  const resetForm = () => {
+  /**
+   * Responsável por resetar o form de login
+   */
+  const resetLoginForm = () => {
     email.value = ''
     password.value = ''
   }
@@ -25,6 +48,6 @@ export const useAuth = () => {
     password,
     isLoading,
     login,
-    resetForm,
+    resetLoginForm,
   }
 }
