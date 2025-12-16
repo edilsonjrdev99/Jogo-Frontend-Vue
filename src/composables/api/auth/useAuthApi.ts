@@ -26,8 +26,28 @@ export default function useAuthApi() {
       onError
     );
   }
+
+  /**
+   * Responsável por fazer a request de logout de usuário POST /auth/users/login
+   * @param onSuccess Callback de sucesso
+   * @param onError Callback de erro
+   */
+  const logoutRequest = (
+    onSuccess: SuccessCallback,
+    onError: ErrorCallback
+  ) => {
+    httpRequest(
+      'post',
+      '/auth/users/logout',
+      undefined,
+      undefined,
+      onSuccess,
+      onError
+    );
+  }
   
   return {
-    loginRequest
+    loginRequest,
+    logoutRequest
   }
 }

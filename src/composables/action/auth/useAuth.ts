@@ -3,11 +3,11 @@ import { ref } from 'vue';
 // COMPOSABLE
 import useAuthApi from '@/composables/api/auth/useAuthApi';
 
-export const useAuth = () => {
+export default function useAuth() {
   /**
    * Função de request para o backend
    */
-  const { loginRequest } = useAuthApi();
+  const { loginRequest, logoutRequest } = useAuthApi();
 
   const email = ref('');
   const password = ref('');
@@ -29,8 +29,22 @@ export const useAuth = () => {
         resetLoginForm();
       }, // Success
       (error) => {
-        console.log(error);
+        console.log(error?.response?.data);
         isLoading.value = false;
+      } // Error
+    );
+  }
+
+  /**
+   * Responsável por fazer o logout do user
+   */
+  const logout = async () => {
+    logoutRequest(
+      (response) => {
+        console.log(response.data.message);
+      }, // Success
+      (error) => {
+        console.log(error);
       } // Error
     );
   }
@@ -48,6 +62,7 @@ export const useAuth = () => {
     password,
     isLoading,
     login,
+    logout,
     resetLoginForm,
   }
 }
