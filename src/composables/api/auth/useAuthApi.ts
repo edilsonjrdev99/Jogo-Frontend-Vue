@@ -45,9 +45,29 @@ export default function useAuthApi() {
       onError
     );
   }
+
+  /**
+   * Responsável por fazer a request que lista os dados do usuário autenticado GET /auth/users/me
+   * @param onSuccess Callback de sucesso
+   * @param onError Callback de erro
+   */
+  const meRequest = (
+    onSuccess: SuccessCallback,
+    onError: ErrorCallback
+  ) => {
+    httpRequest(
+      'get',
+      '/auth/users/me',
+      undefined,
+      undefined,
+      onSuccess,
+      onError
+    );
+  }
   
   return {
     loginRequest,
-    logoutRequest
+    logoutRequest,
+    meRequest
   }
 }

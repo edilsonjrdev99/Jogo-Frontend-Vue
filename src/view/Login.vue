@@ -3,9 +3,9 @@
   import { ArrowLeft } from 'lucide-vue-next';
   import CommonInput from '@/components/common/inputs/CommonInput.vue';
   import CommonButton from '@/components/common/buttons/CommonButton.vue';
-
+  
   // COMPOSABLE
-  import { useAuth } from '@/composables/action/auth/useAuth';
+  import useAuth from '@/composables/action/auth/useAuth';
 
   const { email, password, isLoading, login } = useAuth();
 

@@ -1,4 +1,8 @@
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+// COMPONENT
+import { useToast } from 'vue-toastification';
 
 // COMPOSABLE
 import useAuthApi from '@/composables/api/auth/useAuthApi';
@@ -7,7 +11,10 @@ export default function useAuth() {
   /**
    * Função de request para o backend
    */
-  const { loginRequest, logoutRequest } = useAuthApi();
+  const { loginRequest, logoutRequest, meRequest } = useAuthApi();
+  
+  const toast = useToast();
+  const router = useRouter();
 
   const email = ref('');
   const password = ref('');
@@ -18,18 +25,19 @@ export default function useAuth() {
    */
   const login = async () => {
     isLoading.value = true;
-    
+
     const payload = { email: email.value, password: password.value };
 
     loginRequest(
       payload,
       (response) => {
-        console.log(response.data.message);
+        toast.success(response.data.message || 'Login realizado com sucesso.');
         isLoading.value = false;
         resetLoginForm();
+        router.push('/game');
       }, // Success
-      (error) => {
-        console.log(error?.response?.data);
+      () => {
+        toast.error('Credenciais inválidas');
         isLoading.value = false;
       } // Error
     );
@@ -41,11 +49,23 @@ export default function useAuth() {
   const logout = async () => {
     logoutRequest(
       (response) => {
-        console.log(response.data.message);
+        toast.success(response.data.message || 'Logout realizado com sucesso.');
       }, // Success
-      (error) => {
-        console.log(error);
+      () => {
+        toast.error('Erro ao tentar fazer logout.');
       } // Error
+    );
+  }
+
+  /**
+   * Responsável por listar as informações do usuário logado
+   */
+  const me = async () => {
+    meRequest(
+      () => {}, // Success
+      () => {
+        toast.error('Erro ao tentar buscar as informações do usuário logado');
+      }
     );
   }
 
@@ -63,6 +83,7 @@ export default function useAuth() {
     isLoading,
     login,
     logout,
+    me,
     resetLoginForm,
   }
 }
