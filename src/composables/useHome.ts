@@ -1,7 +1,7 @@
-import { ref } from 'vue'
+import { ref } from 'vue';
 
 export const useHome = () => {
-  const message = ref('Bem-vindo ao Front Jogo!')
+  const message = ref('Bem-vindo(a) ao Jogo!');
 
   return {
     message,
