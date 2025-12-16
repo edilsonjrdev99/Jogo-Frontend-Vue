@@ -1,6 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  // COMPONENT
+  import CommonLoader from '@/components/common/CommonLoader.vue';
+</script>
 
 <template>
+  <CommonLoader />
   <router-view />
 </template>
 

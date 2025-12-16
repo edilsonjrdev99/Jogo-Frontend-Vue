@@ -1,4 +1,5 @@
 import { ref } from "vue";
+import { useRouter } from 'vue-router';
 
 // TYPE
 import type { CreateUserApiRequestType } from "@/types/api/requests/users/usersApiRequestType.type";
@@ -11,6 +12,8 @@ export default function useUsers() {
    * Função de request para o backend
    */
   const { createUserRequest } = useUsersApi();
+
+  const router = useRouter();
 
   const isLoading = ref(false);
 
@@ -28,6 +31,7 @@ export default function useUsers() {
         console.log(response.data);
         isLoading.value = false;
         resetCreateForm();
+        router.push('/login');
       }, // Success
       (error) => {
         console.log(error.response?.data);
