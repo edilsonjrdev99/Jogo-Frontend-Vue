@@ -13,11 +13,11 @@ export default function useAuth() {
    */
   const { loginRequest, logoutRequest, meRequest } = useAuthApi();
   
-  const toast = useToast();
+  const toast  = useToast();
   const router = useRouter();
 
-  const email = ref('');
-  const password = ref('');
+  const email     = ref('');
+  const password  = ref('');
   const isLoading = ref(false);
 
   /**
@@ -37,7 +37,7 @@ export default function useAuth() {
         router.push('/game');
       }, // Success
       () => {
-        toast.error('Credenciais inválidas');
+        toast.error('Credenciais inválidas.');
         isLoading.value = false;
       } // Error
     );
@@ -49,6 +49,7 @@ export default function useAuth() {
   const logout = async () => {
     logoutRequest(
       (response) => {
+        router.push('/login');
         toast.success(response.data.message || 'Logout realizado com sucesso.');
       }, // Success
       () => {
@@ -64,9 +65,26 @@ export default function useAuth() {
     meRequest(
       () => {}, // Success
       () => {
-        toast.error('Erro ao tentar buscar as informações do usuário logado');
+        toast.error('Erro ao tentar buscar as informações do usuário logado.');
       }
     );
+  }
+
+  /**
+   * Responsável por verificar se o usuário está autenticado
+   * Retorna uma Promise que resolve com true se autenticado, false se não
+   */
+  const checkAuth = (): Promise<boolean> => {
+    return new Promise((resolve) => {
+      meRequest(
+        () => {
+          resolve(true);
+        }, // Success - usuário autenticado
+        () => {
+          resolve(false);
+        } // Error - usuário não autenticado
+      );
+    });
   }
 
   /**
@@ -84,6 +102,7 @@ export default function useAuth() {
     login,
     logout,
     me,
+    checkAuth,
     resetLoginForm,
   }
 }
