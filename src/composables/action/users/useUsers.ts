@@ -4,6 +4,9 @@ import { useRouter } from 'vue-router';
 // TYPE
 import type { CreateUserApiRequestType } from "@/types/api/requests/users/usersApiRequestType.type";
 
+// COMPONENT
+import { useToast } from 'vue-toastification';
+
 // COMPOSABLE
 import useUsersApi from "@/composables/api/users/useUsersApi";
 
@@ -13,8 +16,8 @@ export default function useUsers() {
    */
   const { createUserRequest } = useUsersApi();
 
+  const toast = useToast();
   const router = useRouter();
-
   const isLoading = ref(false);
 
   const forms = ref<CreateUserApiRequestType>(getDefaultForms());
@@ -28,13 +31,13 @@ export default function useUsers() {
     createUserRequest(
       forms.value,
       (response) => {
-        console.log(response.data);
         isLoading.value = false;
         resetCreateForm();
+        toast.success(response.data.message || 'Usuário criado com sucesso.');
         router.push('/login');
       }, // Success
       (error) => {
-        console.log(error.response?.data);
+        toast.error(error.response?.data.message || 'Erro ao criar usuário.');
       } // Error
     );
   }
@@ -50,13 +53,14 @@ export default function useUsers() {
    * Responsável por retornar o form de cadastro de usuário default
    * @returns CreateUserApiRequestType - form de criação de usuário
    */
-  function getDefaultForms() {
+  function getDefaultForms(): CreateUserApiRequestType {
     return {
       name: '',
       email: '',
       password: '',
       password_confirmation: '',
-      is_admin: false
+      is_admin: false,
+      class: 'warrior'
     }
   }
   

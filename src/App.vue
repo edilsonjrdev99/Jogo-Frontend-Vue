@@ -14,7 +14,7 @@
   const { showLoader, hideLoader } = useLoader();
 
   onMounted(async () => {
-    showLoader('Verificando autenticação...');
+    showLoader();
     await authStore.checkAuth();
     hideLoader();
   });

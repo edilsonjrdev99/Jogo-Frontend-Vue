@@ -77,6 +77,40 @@
             icon="KeyRound"
           />
 
+          <!-- Classe -->
+          <p class="mb-4 block text-sm font-medium text-gray-700">Selecione sua classe</p>
+          <div class="flex items-center justify-center w-full gap-4">
+            <!-- Guerreiro -->
+            <label class="cursor-pointer">
+              <input
+                type="radio"
+                name="class"
+                value="warrior"
+                v-model="forms.class"
+                class="sr-only peer"
+              >
+              <div class="relative rounded-lg border-4 border-purple-200 p-3 transition-all duration-200 hover:border-purple-400 peer-checked:border-purple-600 peer-checked:shadow-lg peer-checked:shadow-purple-300">
+                <img src="@/assets/class/guerreiro.png" alt="Guerreiro" class="w-24 h-24 object-contain">
+                <p class="text-center mt-2 text-sm font-medium text-gray-700">Guerreiro</p>
+              </div>
+            </label>
+
+            <!-- Mago -->
+            <label class="cursor-pointer">
+              <input
+                type="radio"
+                name="class"
+                value="mage"
+                v-model="forms.class"
+                class="sr-only peer"
+              >
+              <div class="relative rounded-lg border-4 border-purple-200 p-3 transition-all duration-200 hover:border-purple-400 peer-checked:border-purple-600 peer-checked:shadow-lg peer-checked:shadow-purple-300">
+                <img src="@/assets/class/mago.png" alt="Mago" class="w-24 h-24 object-contain">
+                <p class="text-center mt-2 text-sm font-medium text-gray-700">Mago</p>
+              </div>
+            </label>
+          </div>
+
           <!-- Botão -->
           <CommonButton
             v-model:isLoading="isLoading"
