@@ -18,7 +18,10 @@
     <TopMenuMobile v-if="isMobile" />
 
     <!-- Menu Desktop -->
-    <TopMenu v-else :userName="authStore.user.name" :userClass="authStore.user.class" />
+    <TopMenu 
+      v-else 
+      :user="authStore.user"
+    />
 
     <!-- Dados do usuário -->
     <pre class="mb-4 rounded bg-gray-100 p-4 text-sm">{{ authStore.user }}</pre>

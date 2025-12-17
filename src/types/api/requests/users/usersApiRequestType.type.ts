@@ -7,4 +7,6 @@ export interface CreateUserApiRequestType {
   password_confirmation: string;
   is_admin: boolean;
   class: UserClass;
+  exp: number;
+  cash: number;
 }
