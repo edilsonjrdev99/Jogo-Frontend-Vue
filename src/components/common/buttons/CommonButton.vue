@@ -1,19 +1,31 @@
 <script setup lang="ts">  
+  import { computed } from 'vue';
+
   // TYPES
-  import type { CommonButtonTypePropsTypes } from '@/types/common/buttons/commonButtonType.type';
+  import type { CommonButtonSizes, CommonButtonTypePropsTypes } from '@/types/common/buttons/commonButtonType.type';
 
-  defineProps<CommonButtonTypePropsTypes>();
-
+  const props = defineProps<CommonButtonTypePropsTypes>();
   const isLoading = defineModel<boolean>('isLoading');
+
+  const sizeClass = computed(() => {
+    const sizes: Record<CommonButtonSizes, string> = {
+      'x-sm': 'w-[100px]',
+      'sm': 'w-[300px]',
+      'md': 'w-[400px]',
+      'lg': 'w-[500px]'
+    }
+
+    return props.size ? sizes[props.size] : 'w-full';
+  });
 </script>
 
 <template>
   <button
     :type="type ?? 'submit'"
     :disabled="isLoading"
-    class="
-    w-full cursor-pointer rounded-lg bg-purple-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-orange-500 disabled:opacity-50 disabled:cursor-not-allowed"
+    class="cursor-pointer rounded-lg bg-purple-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-orange-500 disabled:opacity-50 disabled:cursor-not-allowed"
+    :class="sizeClass"
   >
-    {{ isLoading ? 'Carregando...' : text }}
+    {{ isLoading ? textLoading || 'Carregando...' : text }}
   </button>
 </template>
