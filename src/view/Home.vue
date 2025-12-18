@@ -11,7 +11,7 @@
       <h1 class="mb-4 text-3xl font-bold text-gray-800">{{ message }}</h1>
       <p class="text-gray-600 mb-4">Faça login ou cadastre-se para poder jogar o game!</p>
       <RouterLink to="/login">
-        <button class="w-full cursor-pointer rounded-lg bg-purple-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-orange-500 disabled:opacity-50 disabled:cursor-not-allowed">
+        <button class="w-full cursor-pointer rounded-lg bg-lime-800 px-4 py-3 font-semibold text-white transition-colors hover:bg-lime-600 disabled:opacity-50 disabled:cursor-not-allowed">
           Entrar
         </button>
       </RouterLink>

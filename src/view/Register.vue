@@ -20,7 +20,7 @@
       <div class="rounded-lg bg-white p-8 shadow-lg">
         <!-- Botão de voltar -->
         <div>
-          <RouterLink to="/login" class="flex gap-1 fustify-center items-center text-purple-600 font-medium mb-6 hover:text-orange-500">
+          <RouterLink to="/login" class="flex gap-1 fustify-center items-center text-lime-800 font-medium mb-6 hover:text-lime-600">
             <ArrowLeft :size="20" />
             Voltar
           </RouterLink>
@@ -28,7 +28,7 @@
 
         <!-- Header -->
         <div class="mb-8">
-          <h1 class="text-3xl text-center font-bold text-purple-500">Cadastre-se</h1>
+          <h1 class="text-3xl text-center font-bold text-lime-800">Cadastre-se</h1>
         </div>
 
         <!-- Form -->
@@ -89,7 +89,7 @@
                 v-model="forms.class"
                 class="sr-only peer"
               >
-              <div class="relative rounded-lg border-4 border-purple-200 p-3 transition-all duration-200 hover:border-purple-400 peer-checked:border-purple-600 peer-checked:shadow-lg peer-checked:shadow-purple-300">
+              <div class="relative rounded-lg border-4 border-lime-200 p-3 transition-all duration-200 hover:border-lime-400 peer-checked:border-lime-800 peer-checked:shadow-lg peer-checked:shadow-lime-300">
                 <img src="@/assets/class/guerreiro.png" alt="Guerreiro" class="w-24 h-24 object-contain">
                 <p class="text-center mt-2 text-sm font-medium text-gray-700">Guerreiro</p>
               </div>
@@ -104,7 +104,7 @@
                 v-model="forms.class"
                 class="sr-only peer"
               >
-              <div class="relative rounded-lg border-4 border-purple-200 p-3 transition-all duration-200 hover:border-purple-400 peer-checked:border-purple-600 peer-checked:shadow-lg peer-checked:shadow-purple-300">
+              <div class="relative rounded-lg border-4 border-lime-200 p-3 transition-all duration-200 hover:border-lime-400 peer-checked:border-lime-800 peer-checked:shadow-lg peer-checked:shadow-lime-300">
                 <img src="@/assets/class/mago.png" alt="Mago" class="w-24 h-24 object-contain">
                 <p class="text-center mt-2 text-sm font-medium text-gray-700">Mago</p>
               </div>
@@ -122,7 +122,7 @@
         <div class="mt-6 text-center">
           <p class="text-sm text-gray-600">
             Já tem conta?
-            <RouterLink to="/login" class="font-medium text-purple-600 hover:text-orange-500">Faça login</RouterLink>
+            <RouterLink to="/login" class="font-medium text-lime-800 hover:text-lime-600">Faça login</RouterLink>
           </p>
         </div>
       </div>

@@ -16,7 +16,7 @@
       class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-black/50 backdrop-blur-md"
     >
       <!-- Spinner -->
-      <div class="h-16 w-16 animate-spin rounded-full border-4 border-purple-300 border-t-purple-600"></div>
+      <div class="h-16 w-16 animate-spin rounded-full border-4 border-lime-300 border-t-lime-800"></div>
 
       <!-- Texto -->
       <p class="text-xl font-semibold text-white">{{ loadingText }}</p>

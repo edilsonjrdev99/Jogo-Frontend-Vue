@@ -20,7 +20,7 @@
       <div class="rounded-lg bg-white p-8 shadow-lg">
         <!-- Botão de voltar -->
         <div>
-          <RouterLink to="/" class="flex gap-1 fustify-center items-center text-purple-600 font-medium mb-6 hover:text-orange-500">
+          <RouterLink to="/" class="flex gap-1 fustify-center items-center text-lime-800 font-medium mb-6 hover:text-lime-600">
             <ArrowLeft :size="20" />
             Voltar
           </RouterLink>
@@ -28,7 +28,7 @@
 
         <!-- Header -->
         <div class="mb-8">
-          <h1 class="text-3xl text-center font-bold text-purple-500">Bem-vindo</h1>
+          <h1 class="text-3xl text-center font-bold text-lime-800">Bem-vindo</h1>
         </div>
 
         <!-- Form -->
@@ -66,7 +66,7 @@
         <div class="mt-6 text-center">
           <p class="text-sm text-gray-600">
             Não tem conta?
-            <RouterLink to="/cadastro" class="font-medium text-purple-600 hover:text-orange-500">Cadastre-se</RouterLink>
+            <RouterLink to="/cadastro" class="font-medium text-lime-800 hover:text-lime-600">Cadastre-se</RouterLink>
           </p>
         </div>
       </div>

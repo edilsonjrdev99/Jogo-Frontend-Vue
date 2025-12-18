@@ -23,7 +23,7 @@
   <button
     :type="type ?? 'submit'"
     :disabled="isLoading"
-    class="cursor-pointer rounded-lg bg-purple-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-orange-500 disabled:opacity-50 disabled:cursor-not-allowed"
+    class="cursor-pointer rounded-lg bg-lime-800 px-4 py-3 font-semibold text-amber-100 transition-colors hover:bg-lime-600 disabled:opacity-50 disabled:cursor-not-allowed"
     :class="sizeClass"
   >
     {{ isLoading ? textLoading || 'Carregando...' : text }}

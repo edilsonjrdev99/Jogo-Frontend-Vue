@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <nav class="bg-purple-300 p-4 text-center">
+  <nav class="bg-lime-800 p-4 text-center">
     Menu mobile
   </nav>
 </template>

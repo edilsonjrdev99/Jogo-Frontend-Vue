@@ -24,7 +24,7 @@
     <label for="password" class="mb-2 block text-sm font-medium text-gray-700">{{ label }}</label>
     <div class="relative">
       <div v-if="icon" class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-        <iconComponent :size="20" class="text-purple-600" />
+        <iconComponent :size="20" class="text-lime-800" />
       </div>
       <input
         :id="id"
@@ -32,7 +32,7 @@
         :type="type ?? 'text'"
         :required="required ?? false"
         :placeholder="placeholder"
-        class="w-full rounded-lg border-2 border-purple-200 bg-white px-4 py-3 pl-10 text-slate-800 placeholder-slate-400 transition-all duration-200 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+        class="w-full rounded-lg border-2 border-lime-200 bg-white px-4 py-3 pl-10 text-slate-800 placeholder-slate-400 transition-all duration-200 focus:border-lime-800 focus:outline-none focus:ring-2 focus:ring-lime-800/20"
       />
     </div>
   </div>
