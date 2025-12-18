@@ -5,6 +5,7 @@
   import TopMenuMobile from '@/components/menus/TopMenuMobile.vue';
   import CommonPopup from '@/components/common/popups/CommonPopup.vue';
   import CommonButton from '@/components/common/buttons/CommonButton.vue';
+  import CommonInput from '@/components/common/inputs/CommonInput.vue';
 
   // STORE
   import { useAuthStore } from '@/stores/auth/authStore';
@@ -15,9 +16,11 @@
 
   const authStore = useAuthStore();
   const { isMobile } = useDevice();
-  const { connect, usersOnline, connected } = useWebSocket();
-  const show = ref<boolean>(false);
+  const { connect, usersOnline, connected, chatMessages, sendChatMessage } = useWebSocket();
   const awaitFirstValidationConnectedUser = ref<boolean>(false);
+  const showOnlineUsers = ref<boolean>(false);
+  const showChat = ref<boolean>(false);
+  const textMessageChat = ref<string>('');
 
   onMounted(() => {
     connect(authStore.user.name);
@@ -26,6 +29,11 @@
 
   function userReconect() {
     connect(authStore.user.name);
+  }
+
+  function sendMessage() {
+    sendChatMessage(authStore.user.name, textMessageChat.value);
+    textMessageChat.value = '';
   }
 
   // Aguarda a primeira validação do websocket de usuário conectado ao servidor
@@ -58,14 +66,47 @@
       size="x-sm"
       class="absolute bottom-10 right-10"
       :disabled="!connected"
-      @click="show = true"
+      @click="showOnlineUsers = true"
+    />
+
+    <CommonButton 
+      text="Bate-papo"
+      type="button"
+      size="x-sm"
+      class="absolute bottom-10 left-10"
+      :disabled="!connected"
+      @click="showChat = true"
     />
 
     <!-- Popup de usuários online -->
-    <CommonPopup :show="show" @close="show = false">
-      <!-- Usuários online -->
+    <CommonPopup :show="showOnlineUsers" @close="showOnlineUsers = false">
       <div v-for="user in usersOnline" class="text-x1 text-amber-300">
         {{ user.name }}
+      </div>
+    </CommonPopup>
+
+    <!-- Popup do chat -->
+    <CommonPopup :show="showChat" @close="showChat = false" v-if="chatMessages">
+      <div v-for="chat in chatMessages" class="text-x1 text-amber-300 mb-3">
+        {{ chat.user }} - {{ chat.time }}:  {{ chat.message }}
+      </div>
+
+      <div class="flex justify-center flex-col gap-3">
+        <CommonInput 
+          v-model="textMessageChat"
+          label="" 
+          placeholder="Digite sua mensagem..." 
+          id="message" 
+          type="text"
+          icon="MessageCircle" 
+        />
+  
+        <CommonButton 
+          text="Enviar"
+          type="button"
+          size="x-sm"
+          @click="sendMessage"
+        />
       </div>
     </CommonPopup>
 

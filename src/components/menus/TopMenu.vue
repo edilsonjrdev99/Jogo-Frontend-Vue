@@ -73,12 +73,6 @@
       <!-- Botões -->
       <div class="relative flex gap-3 z-10">
         <CommonButton
-          text="Inventário"
-          textLoading="Saindo..."
-          size="x-sm"
-        />
-
-        <CommonButton
           v-model:isLoading="isLoading"
           text="Sair"
           textLoading="Saindo..."
