@@ -29,6 +29,11 @@ const routes: RouteRecordRaw[] = [
     name: 'Game',
     component: () => import('@/view/Game.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/websocket',
+    name: 'Websocket',
+    component: () => import('@/view/Test.vue'),
   }
 ]
 

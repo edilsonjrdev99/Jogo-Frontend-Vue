@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import { computed } from 'vue';
+  
   // TYPE
   import type { CreateUserApiRequestType } from '@/types/api/requests/users/usersApiRequestType.type';
   
@@ -14,9 +16,16 @@
 
   const { isLoading, logout } = useAuth();
 
-  defineProps<{
-    user: CreateUserApiRequestType
+  const props = defineProps<{
+    user: CreateUserApiRequestType;
+    connected: boolean;
   }>();
+
+  const isConnected = computed<string>(() => {
+    if(props.connected) return 'Conectado';
+
+    return 'Desconectado';
+  });
 
   async function handleSubmit() {
     await logout();
@@ -24,7 +33,7 @@
 </script>
 
 <template>
-  <nav class="relative p-6 h-[150px] rpg-menu">
+  <nav v-if="user" class="relative p-6 h-[150px] rpg-menu">
     <!-- Elementos decorativos nos cantos -->
     <div class="corner-decoration corner-top-left"></div>
     <div class="corner-decoration corner-top-right"></div>
@@ -32,8 +41,8 @@
     <div class="corner-decoration corner-bottom-right"></div>
 
     <div class="flex justify-between items-center">
-      <!-- Conteúdo principal -->
-      <div class="flex justify-center items-center gap-4">
+      <!-- Informações do usuário -->
+      <div class="flex items-center gap-4 w-[400px]">
         <div>
           <img
             :src="user.class == 'warrior' ? warriorImage : mageImage"
@@ -42,7 +51,12 @@
           >
         </div>
         <div class="text-amber-100 drop-shadow-lg">
-          <p class="text-xl text-amber-300">{{ user.name }}</p>
+          <div class="flex items-center gap-3">
+            <p class="text-xl text-amber-300">{{ user.name }}</p>
+            <span class="text-gray-300">...</span>
+            <p class="text-1 text-amber-300">{{ user.class == 'warrior' ? 'Guerreiro' : 'Mago' }}</p>
+          </div>
+
           <div class="flex gap-3 items-center mt-2">
             <Coins :size="24" class="text-yellow-400" />
             <span class="text-lg font-semibold">{{ user.cash }}</span>
@@ -52,13 +66,15 @@
         </div>
       </div>
 
-      <div class="text-amber-100 text-xl drop-shadow-lg">
-        Itens
+      <!-- Itens -->
+      <div class="w-full text-center text-amber-100 text-xl drop-shadow-lg">
+        Itens |
+        <span v-if="isConnected">{{ isConnected }}</span>
       </div>
 
+      <!-- Botões -->
       <div class="relative flex gap-3 z-10">
         <CommonButton
-          v-model:isLoading="isLoading"
           text="Inventário"
           textLoading="Saindo..."
           size="x-sm"
