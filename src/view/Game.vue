@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
 
   import TopMenu from '@/components/menus/TopMenu.vue';
   import TopMenuMobile from '@/components/menus/TopMenuMobile.vue';
@@ -16,12 +16,24 @@
   const authStore = useAuthStore();
   const { isMobile } = useDevice();
   const { connect, usersOnline, connected } = useWebSocket();
+  const show = ref<boolean>(false);
+  const awaitFirstValidationConnectedUser = ref<boolean>(false);
 
   onMounted(() => {
     connect(authStore.user.name);
   });
 
-  const show = ref<boolean>(false);
+
+  function userReconect() {
+    connect(authStore.user.name);
+  }
+
+  // Aguarda a primeira validação do websocket de usuário conectado ao servidor
+  watch(connected, (newVal) => {
+    if(newVal) {
+      awaitFirstValidationConnectedUser.value = true;
+    }
+  });
 </script>
 
 <template>
@@ -54,6 +66,20 @@
       <!-- Usuários online -->
       <div v-for="user in usersOnline" class="text-x1 text-amber-300">
         {{ user.name }}
+      </div>
+    </CommonPopup>
+
+    <!-- Popup de informação ausente -->
+    <CommonPopup :show="!connected && awaitFirstValidationConnectedUser">
+      <div class="flex justify-center items-center flex-col gap-3 text-x1 text-amber-300">
+        <p>Parece que você ficou um tempo inativo e acabou sendo desconectado, clique aqui para conectar novamente.</p>
+
+        <CommonButton 
+          text="Reconectar"
+          type="button"
+          size="x-sm"
+          @click="userReconect"
+        />
       </div>
     </CommonPopup>
   </div>

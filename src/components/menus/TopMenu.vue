@@ -53,8 +53,6 @@
         <div class="text-amber-100 drop-shadow-lg">
           <div class="flex items-center gap-3">
             <p class="text-xl text-amber-300">{{ user.name }}</p>
-            <span class="text-gray-300">...</span>
-            <p class="text-1 text-amber-300">{{ user.class == 'warrior' ? 'Guerreiro' : 'Mago' }}</p>
           </div>
 
           <div class="flex gap-3 items-center mt-2">
@@ -68,8 +66,8 @@
 
       <!-- Itens -->
       <div class="w-full text-center text-amber-100 text-xl drop-shadow-lg">
-        Itens |
-        <span v-if="isConnected">{{ isConnected }}</span>
+        <span>Classe: {{ user.class == 'warrior' ? 'Guerreiro' : 'Mago' }} | </span>
+        <span v-if="isConnected">Status: {{ isConnected }}</span>
       </div>
 
       <!-- Botões -->
