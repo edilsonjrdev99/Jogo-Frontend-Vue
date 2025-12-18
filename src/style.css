@@ -18,3 +18,13 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Press Start 2P', cursive;
   line-height: 1.4;
 }
+
+/* Toast */
+.Vue-Toastification__toast {
+  font-family: 'VT323', monospace !important;
+  font-size: 1.125rem !important;
+}
+
+.Vue-Toastification__toast-body {
+  font-family: 'VT323', monospace !important;
+}
