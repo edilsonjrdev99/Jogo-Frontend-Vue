@@ -28,7 +28,14 @@ const routes: RouteRecordRaw[] = [
     path: '/game',
     name: 'Game',
     component: () => import('@/view/Game.vue'),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'game.home',
+        component: () => import('@/components/game/home/GameHome.vue')
+      }
+    ]
   }
 ]
 

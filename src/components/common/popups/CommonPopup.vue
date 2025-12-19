@@ -1,7 +1,10 @@
 <script setup lang="ts">
-  defineProps<{
+  const props = defineProps<{
     show: boolean;
+    minWidth?: boolean;
   }>();
+
+  const minWidthClass = props.minWidth ? 'min-h-[400px]' : '';
 
   const emit = defineEmits<{
     close: [];
@@ -26,6 +29,7 @@
         <!-- Popup -->
         <div
           class="relative rpg-popup w-full max-w-[400px] max-h-[600px] md:max-w-[600px] md:max-h-[600px] overflow-auto"
+          :class="minWidthClass"
           @click.stop
         >
           <!-- Elementos decorativos nos cantos -->

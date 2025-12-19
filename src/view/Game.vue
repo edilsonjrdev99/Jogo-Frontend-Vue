@@ -57,7 +57,9 @@
     />
 
     <!-- Dados do usuário -->
-    <pre class="mb-4 rounded bg-gray-100 p-4 text-sm">{{ authStore.user }}</pre>
+    <!-- <pre class="mb-4 rounded bg-gray-100 p-4 text-sm">{{ authStore.user }}</pre> -->
+
+    <RouterView />
 
     <!-- Botão de usuários online -->
     <CommonButton 
@@ -79,40 +81,48 @@
     />
 
     <!-- Popup de usuários online -->
-    <CommonPopup :show="showOnlineUsers" @close="showOnlineUsers = false">
+    <CommonPopup :show="showOnlineUsers" :minWidth="true" @close="showOnlineUsers = false">
+      <p class="text-1 text-amber-100 text-center mb-3">Usuários ativos...</p>
+
       <div v-for="user in usersOnline" class="text-x1 text-amber-300">
         {{ user.name }}
       </div>
     </CommonPopup>
 
     <!-- Popup do chat -->
-    <CommonPopup :show="showChat" @close="showChat = false" v-if="chatMessages">
-      <div v-for="chat in chatMessages" class="text-x1 text-amber-300 mb-3">
-        {{ chat.user }} - {{ chat.time }}:  {{ chat.message }}
-      </div>
+    <CommonPopup v-if="chatMessages" :show="showChat" @close="showChat = false" :minWidth="true">
+      <div class="flex justify-between flex-col">
+        <div class="h-[300px]">
+          <p class="text-x1 text-amber-100 text-center">Mensagem entre todos os usuários...</p>
 
-      <div class="flex justify-center flex-col gap-3">
-        <CommonInput 
-          v-model="textMessageChat"
-          label="" 
-          placeholder="Digite sua mensagem..." 
-          id="message" 
-          type="text"
-          icon="MessageCircle" 
-        />
+          <div v-for="chat in chatMessages" class="text-x1 text-amber-300 mb-3">
+            {{ chat.user }} - {{ chat.time }}:  {{ chat.message }}
+          </div>
+        </div>
   
-        <CommonButton 
-          text="Enviar"
-          type="button"
-          size="x-sm"
-          @click="sendMessage"
-        />
+        <div class="flex justify-center flex-col gap-3">
+          <CommonInput 
+            v-model="textMessageChat"
+            label="" 
+            placeholder="Digite sua mensagem..." 
+            id="message" 
+            type="text"
+            icon="MessageCircle" 
+          />
+    
+          <CommonButton 
+            text="Enviar"
+            type="button"
+            size="x-sm"
+            @click="sendMessage"
+          />
+        </div>
       </div>
     </CommonPopup>
 
     <!-- Popup de informação ausente -->
     <CommonPopup :show="!connected && awaitFirstValidationConnectedUser">
-      <div class="flex justify-center items-center flex-col gap-3 text-x1 text-amber-300">
+      <div class="flex justify-between items-center flex-col gap-3 text-x1 text-amber-100">
         <p>Parece que você ficou um tempo inativo e acabou sendo desconectado, clique aqui para conectar novamente.</p>
 
         <CommonButton 
