@@ -6,7 +6,7 @@
 <template>
   <div class="flex justify-center items-center flex-col gap-3 m-4">
     <RouterLink to="/game/inventory">
-      <CommonButton 
+      <CommonButton
         text="Ver inventário"
         type="button"
         size="sm"
@@ -14,8 +14,16 @@
     </RouterLink>
 
     <RouterLink to="/game/shop">
-      <CommonButton 
+      <CommonButton
         text="Ir ao Mercado"
+        type="button"
+        size="sm"
+      />
+    </RouterLink>
+
+    <RouterLink to="/game/partida">
+      <CommonButton
+        text="Acessar partida"
         type="button"
         size="sm"
       />

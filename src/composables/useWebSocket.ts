@@ -1,20 +1,22 @@
-import { ref, onUnmounted } from 'vue';
+import { ref } from 'vue';
 
 // TYPES
 import type { WsMessageType } from '@/types/websocket/websocketType.type';
 import type { ChatMessageType } from '@/types/websocket/chat/chatMessageType.type';
 import type { OnlineUserType } from '@/types/websocket/user/onlineUserType.type';
 
+const movimentPlayer = ref([]);
+const socket = ref<WebSocket | null>(null);
+const usersOnline = ref<OnlineUserType[]>([]);
+
 export default function useWebSocket() {
-  const socket = ref<WebSocket | null>(null);
-  const usersOnline = ref<OnlineUserType[]>([]);
   const connected = ref(false);
   const chatMessages = ref<ChatMessageType[]>([]);
 
   /**
    * Responsável por criar a conexão com o servidor websocket e enviar o usuário conectado
    * @param username @var string - Nome do usuário
-   */
+  */
   function connect(username: string) {
     socket.value = new WebSocket('ws://localhost:9501');
 
@@ -36,6 +38,9 @@ export default function useWebSocket() {
           break;
         case 'chat_update':
           chatMessages.value = data.data;
+          break;
+        case 'moviment':
+          movimentPlayer.value = data.data;
           break;
       }
     }
@@ -65,16 +70,30 @@ export default function useWebSocket() {
     }));
   }
 
-  onUnmounted(() => {
-    disconnect();
-  })
+  /**
+   * Responsável por atualizar a posição do usuário na partida
+   * @param name @var string - Nome do usuário
+   * @param position @var number - posição do usuário em pixel
+   */
+  function moviment(name: string, position: number) {
+    socket.value?.send(JSON.stringify({
+      type: 'moviment',
+      data: { name, position }
+    }))
+  }
+
+  // onUnmounted(() => {
+  //   disconnect();
+  // })
 
   return {
     connect,
     disconnect,
     sendChatMessage,
+    moviment,
     usersOnline,
     connected,
-    chatMessages
+    chatMessages,
+    movimentPlayer
   }
 }

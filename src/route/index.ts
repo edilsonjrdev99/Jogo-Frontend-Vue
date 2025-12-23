@@ -34,6 +34,11 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: 'game.home',
         component: () => import('@/components/game/home/GameHome.vue')
+      },
+      {
+        path: 'partida',
+        name: 'partida.home',
+        component: () => import('@/components/game/home/PartidaHome.vue')
       }
     ]
   }
