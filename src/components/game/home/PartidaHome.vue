@@ -2,8 +2,11 @@
   import { onMounted, ref } from 'vue';
 
   // COMPONENTS
-  import CharGame from '@/components/char/CharGame.vue';
-  import CharMovimentGame from '@/components/char/CharMovimentGame.vue';
+  import CharGame from '@/components/characters/char/CharGame.vue';
+  import BossSkeleton from '@/components/characters/boss/BossSkeleton.vue';
+  import MobsSkeletonWarrior from '@/components/characters/mobs/skeletons/MobsSkeletonWarrior.vue';
+  import MobsSkeletonArcher from '@/components/characters/mobs/skeletons/MobsSkeletonArcher.vue';
+  import MobsSkeletonLancer from '@/components/characters/mobs/skeletons/MobsSkeletonLancer.vue';
 
   // COMPOSABLE
   import useWebSocket from '@/composables/useWebSocket';
@@ -50,32 +53,59 @@
 
 <template>
   <div class="flex justify-center">
-    <div class="relative max-w-[1820px] w-full h-[800px] border-4 border-yellow-500">
-      <div class="absolute w-full h-[200px] bg-sky-300 bottom-0">
-        <CharMovimentGame
-          v-if="isMoviment"
+    <div class="relative max-w-[1820px] w-full h-[800px] bg-sky-500 border-4 border-yellow-500 overflow-hidden">
+      <div class="absolute w-full h-[200px] bg-lime-700 border-t-4 border-amber-900 bottom-0">
+
+        <CharGame
           v-for="user in usersOnline"
-          :key="user.fd + '-moviment'"
-          :direction="direction"
-          class="absolute top-[-130px] index-100 scaleX(-1)"
+          :key="user.fd"
+          :name="user.name ?? ''"
+          class="absolute top-[-90px] index-100"
           :style="{
             left: `${movimentPlayer[user.fd]?.['position'] ?? 0}px`,
           }"
         />
 
-        <CharGame
-          v-else
-          v-for="user in usersOnline"
-          :key="user.fd"
-          :name="user.name ?? ''"
-          class="absolute top-[-130px] index-100"
-          :style="{
-            left: `${movimentPlayer[user.fd]?.['position'] ?? 0}px`,
-          }"
+        <MobsSkeletonWarrior
+          name="Esqueleto Guerreiro"
+          class="absolute top-[-100px] right-[650px] index-100"
+        />
+
+        <MobsSkeletonArcher
+          name="Esqueleto Arqueiro"
+          class="absolute top-[-100px] right-[450px] index-100"
+        />
+
+        <MobsSkeletonLancer
+          name="Esqueleto Lanceiro"
+          class="absolute top-[-100px] right-[250px] index-100"
+        />
+
+        <BossSkeleton
+          name="Esqueleto"
+          class="absolute top-[-130px] right-[0] index-100"
         />
       </div>
+
+      <img src="@/assets/game/nuvem.png" alt="nuvem" class="w-[500px] absolute right-0 clouds" />
       <pre>{{ movimentPlayer }}</pre>
       <pre>{{ direction }}</pre>
     </div>
   </div>
 </template>
+
+<style lang="css" scoped>
+  .clouds {
+    animation: clouds-animation 15s infinite linear;
+  }
+
+  @keyframes clouds-animation {
+    from {
+      transform: translateX(100%);
+    }
+
+    to {
+      transform: translateX(-1820px);
+    }
+  }
+</style>
